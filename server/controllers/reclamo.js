@@ -63,16 +63,16 @@ export function report(req, res) {
   let departamento = req.params.id.toUpperCase();
   console.log(departamento);
 
-  return Ue.findAll({
+  return Reclamo.findAll({
     attributes: [
-      "des_distrito",
-      "des_departamento",
-      [Sequelize.fn("COUNT", Sequelize.col("des_distrito")), "cont"]
+      "distrito",
+      "departamento",
+      [Sequelize.fn("COUNT", Sequelize.col("distrito")), "cont"]
     ],
     where: {
-      des_departamento: departamento
+      departamento: departamento
     },
-    group: ["des_distrito", "des_departamento"]
+    group: ["distrito", "departamento"]
   }).then(result => {
     // console.log(result);
     res.send(result);
