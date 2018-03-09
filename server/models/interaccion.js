@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 export default function(sequelize, DataTypes) {
   return sequelize.define("Interacciones", {
@@ -8,14 +8,11 @@ export default function(sequelize, DataTypes) {
       primaryKey: true,
       autoIncrement: true
     },
+    entrada: {
+      type: DataTypes.STRING
+    },
     categoria: DataTypes.STRING,
     subcategoria: DataTypes.STRING,
-    entrada: {
-      type: DataTypes.STRING,
-      validate: {
-        isIn: [["FACEBOOK", "LINEA_GRATUITA", "WHATSAPP", "CORREO","CHAT","TWITTER"]]
-      }
-    },
-    descripcion: DataTypes.STRING,
+    descripcion: DataTypes.STRING
   });
 }

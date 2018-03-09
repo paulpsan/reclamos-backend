@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 export default function(sequelize, DataTypes) {
   return sequelize.define("Instancias", {
@@ -9,5 +9,8 @@ export default function(sequelize, DataTypes) {
       autoIncrement: true
     },
     entrada: DataTypes.STRING,
+    interacciones: {
+      type: DataTypes.JSONB
+    }
   });
 }

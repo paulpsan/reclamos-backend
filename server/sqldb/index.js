@@ -39,12 +39,4 @@ db.Solicitud.belongsTo(db.Tipologia, {
   as: "Tipologia"
 });
 
-db.Instancia.belongsTo(db.Interaccion, {
-  foreignKey: {
-    name: "fk_interaccion",
-    allowNull: false
-  },
-  as: "Interaccion"
-});
-
 module.exports = db;

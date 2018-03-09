@@ -7,10 +7,10 @@
  * DELETE  /api/instancias/:id          ->  destroy
  */
 
-'use strict';
+"use strict";
 
-import _ from 'lodash';
-import {Instancia} from '../sqldb';
+import _ from "lodash";
+import { Instancia } from "../sqldb";
 import { Interaccion } from "../sqldb";
 
 function respondWithResult(res, statusCode) {
@@ -24,20 +24,18 @@ function respondWithResult(res, statusCode) {
 
 function saveUpdates(updates) {
   return function(entity) {
-    return entity.updateAttributes(updates)
-      .then(updated => {
-        return updated;
-      });
+    return entity.updateAttributes(updates).then(updated => {
+      return updated;
+    });
   };
 }
 
 function removeEntity(res) {
   return function(entity) {
     if (entity) {
-      return entity.destroy()
-        .then(() => {
-          res.status(204).end();
-        });
+      return entity.destroy().then(() => {
+        res.status(204).end();
+      });
     }
   };
 }
@@ -61,9 +59,7 @@ function handleError(res, statusCode) {
 
 // Gets a list of Instancias
 export function index(req, res) {
-  return Instancia.findAll({
-    include: [{ model: Interaccion, as: "Interaccion" }],
-  }) 
+  return Instancia.findAll()
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
@@ -71,7 +67,7 @@ export function index(req, res) {
 // Gets a single Instancia from the DB
 export function show(req, res) {
   return Instancia.find({
-    include: [{ model: Instancia, as: "Instancia" }],
+    // include: [{ model: Instancia, as: "Instancia" }],
     where: {
       _id: req.params.id
     }

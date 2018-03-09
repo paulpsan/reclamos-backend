@@ -60,11 +60,22 @@ function handleError(res, statusCode) {
 
 // Gets a list of Interacciones
 export function index(req, res) {
-  return Interaccion.findAll()
-    .then(respondWithResult(res))
-    .catch(handleError(res));
+  if (req.query.entrada && req.query.categoria) {
+    console.log(req.query);
+    return Interaccion.findAll({
+      where: {
+        entrada: req.query.entrada,
+        categoria: req.query.categoria
+      }
+    })
+      .then(respondWithResult(res))
+      .catch(handleError(res));
+  } else {
+    return Interaccion.findAll()
+      .then(respondWithResult(res))
+      .catch(handleError(res));
+  }
 }
-
 // Gets a single Interaccion from the DB
 export function show(req, res) {
   return Interaccion.find({

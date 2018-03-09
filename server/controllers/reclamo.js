@@ -59,7 +59,7 @@ function handleError(res, statusCode) {
     res.status(statusCode).send(err);
   };
 }
-export function report(req, res) {
+export function graficas(req, res) {
   let departamento = req.params.id.toUpperCase();
   console.log(departamento);
 
@@ -92,6 +92,7 @@ export function index(req, res) {
 // Gets a single Reclamo from the DB
 export function show(req, res) {
   return Reclamo.find({
+    include: [{ model: Usuario, as: "Usuario" }],
     where: {
       _id: req.params.id
     }
@@ -139,3 +140,64 @@ export function destroy(req, res) {
     .then(removeEntity(res))
     .catch(handleError(res));
 }
+
+export function reporte(req, res) {
+  console.log(req.body);
+  const Op = Sequelize.Op;
+  let desde = new Date(req.body.desde);
+  let hasta = new Date(req.body.hasta);
+  // d.setDate(2);
+  // h.setDate(15);
+  // console.log("desde", d, "  hasta", h);
+  return Reclamo.findAll({
+    include: [{ model: Usuario, as: "Usuario" }],
+    where: {
+      createdAt: {
+        [Op.between]: [desde, hasta]
+      }
+    }
+  })
+    .then(response => {
+      return res.status(200).json(response);
+    })
+    .catch(handleError(res));
+}
+
+// export function reporte(req, res) {
+//   console.log(req.body);
+//   const Op = Sequelize.Op;
+//   let desde = new Date("2018-02-02");
+//   let hasta = new Date("2018-03-03");
+//   // d.setDate(2);
+//   // h.setDate(15);
+//   // console.log("desde", d, "  hasta", h);
+//   return Reclamo.findAll({
+//     where: {
+//       createdAt: {
+//         [Op.between]: [desde, hasta]
+//       }
+//     }
+//   })
+//     .then(response => {
+//       console.log(response);
+//       var data = {
+//         template: { shortid: "Bk8T081KG" },
+//         data: { data: {} },
+//         options: {
+//           preview: true
+//         }
+//       };
+//       var options = {
+//         uri: "http://localhost:5488/api/report",
+//         method: "POST",
+//         json: data
+//       };
+//       request(options)
+//         .then(resp => {
+//           console.log("prueba", resp);
+//         })
+//         .pipe(res);
+//       // return res.status(200).json({ data: response });
+//     })
+//     .catch(handleError(res));
+// }
