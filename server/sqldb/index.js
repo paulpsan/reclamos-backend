@@ -16,6 +16,9 @@ db.Ue = db.sequelize.import("../models/ue");
 
 db.Instancia = db.sequelize.import("../models/instancia");
 db.Interaccion = db.sequelize.import("../models/interaccion");
+db.InstanciaInteraccion = db.sequelize.import(
+  "../models/InstanciaInteracciones"
+);
 
 //aqui agregamos inclusiones
 /**
@@ -37,6 +40,15 @@ db.Solicitud.belongsTo(db.Tipologia, {
     allowNull: false
   },
   as: "Tipologia"
+});
+
+db.Instancia.belongsToMany(db.Interaccion, {
+  through: "InstanciaInteracciones",
+  foreignKey: "fk_instancia"
+});
+db.Interaccion.belongsToMany(db.Instancia, {
+  through: "InstanciaInteracciones",
+  foreignKey: "fk_interaccion"
 });
 
 module.exports = db;

@@ -8,9 +8,6 @@ export default function(sequelize, DataTypes) {
       primaryKey: true,
       autoIncrement: true
     },
-    entrada: DataTypes.STRING,
-    interacciones: {
-      type: DataTypes.JSONB
-    }
+    entrada: DataTypes.STRING
   });
 }

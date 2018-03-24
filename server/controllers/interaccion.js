@@ -71,6 +71,7 @@ export function index(req, res) {
       .then(respondWithResult(res))
       .catch(handleError(res));
   } else {
+    console.log("entro");
     return Interaccion.findAll()
       .then(respondWithResult(res))
       .catch(handleError(res));
@@ -78,14 +79,17 @@ export function index(req, res) {
 }
 // Gets a single Interaccion from the DB
 export function show(req, res) {
-  return Interaccion.find({
-    where: {
-      _id: req.params.id
-    }
-  })
-    .then(handleEntityNotFound(res))
-    .then(respondWithResult(res))
-    .catch(handleError(res));
+  console.log("prueba", req.params);
+  return (
+    Interaccion.find({
+      where: {
+        _id: req.params.id
+      }
+    })
+      // .then(handleEntityNotFound(res))
+      .then(respondWithResult(res))
+      .catch(handleError(res))
+  );
 }
 
 // Creates a new Interaccion in the DB

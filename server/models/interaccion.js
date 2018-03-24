@@ -13,6 +13,9 @@ export default function(sequelize, DataTypes) {
     },
     categoria: DataTypes.STRING,
     subcategoria: DataTypes.STRING,
-    descripcion: DataTypes.STRING
+    descripcion: DataTypes.STRING,
+    formulario: {
+      type: DataTypes.JSONB
+    }
   });
 }

@@ -12,6 +12,9 @@
 import _ from "lodash";
 import { Instancia } from "../sqldb";
 import { Interaccion } from "../sqldb";
+import { InstanciaInteraccion } from "../sqldb";
+import { Sequelize } from "sequelize";
+import "moment/locale/es-us";
 
 function respondWithResult(res, statusCode) {
   statusCode = statusCode || 200;
@@ -59,7 +62,18 @@ function handleError(res, statusCode) {
 
 // Gets a list of Instancias
 export function index(req, res) {
-  return Instancia.findAll()
+  return Instancia.findAll({
+    include: [{ all: true }]
+  })
+    .then(respondWithResult(res))
+    .catch(handleError(res));
+}
+export function showInteracion(req, res) {
+  console.log(req.params.id, req.params.interaccion);
+  return Instancia.findAll({
+    where: { entrada: req.params.id },
+    include: [{ all: true }]
+  })
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
@@ -67,10 +81,8 @@ export function index(req, res) {
 // Gets a single Instancia from the DB
 export function show(req, res) {
   return Instancia.find({
-    // include: [{ model: Instancia, as: "Instancia" }],
-    where: {
-      _id: req.params.id
-    }
+    include: [{ all: true }],
+    where: { entrada: req.params.id }
   })
     .then(handleEntityNotFound(res))
     .then(respondWithResult(res))
@@ -81,6 +93,13 @@ export function show(req, res) {
 export function create(req, res) {
   console.log(req.body);
   return Instancia.create(req.body)
+    .then(respondWithResult(res, 201))
+    .catch(handleError(res));
+}
+
+export function createInteraccion(req, res) {
+  console.log("entro yo");
+  return InstanciaInteraccion.create(req.body)
     .then(respondWithResult(res, 201))
     .catch(handleError(res));
 }
@@ -110,5 +129,24 @@ export function destroy(req, res) {
   })
     .then(handleEntityNotFound(res))
     .then(removeEntity(res))
+    .catch(handleError(res));
+}
+export function reporte(req, res) {
+  console.log(req.body);
+  const Op = Sequelize.Op;
+  let desde = new Date(req.body.desde);
+  let hasta = new Date(req.body.hasta);
+  hasta.setHours(43, 59, 59, 0);
+  return Instancia.findAll({
+    include: [{ all: true }],
+    where: {
+      createdAt: {
+        [Op.between]: [desde, hasta]
+      }
+    }
+  })
+    .then(response => {
+      return res.status(200).json(response);
+    })
     .catch(handleError(res));
 }
