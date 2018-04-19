@@ -13,7 +13,7 @@ export default function(sequelize, DataTypes) {
     rol: {
       type: DataTypes.STRING,
       validate: {
-        isIn: [["ADMIN", "AGENTE", "SUPERVISOR", "REPORTES"]]
+        isIn: [["ADMIN", "AGENTE", "SUPERVISOR", "REPORTES","INVITADO"]]
       }
     },
     nombres: DataTypes.STRING,

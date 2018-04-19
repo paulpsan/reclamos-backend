@@ -14,6 +14,9 @@ export default function(sequelize, DataTypes) {
     descripcion: {
       type: DataTypes.STRING(2000),
       allowNulll: false
+    },
+    prioridad: {
+      type: DataTypes.INTEGER
     }
   });
 }

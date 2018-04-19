@@ -62,7 +62,8 @@ function handleError(res, statusCode) {
 // Gets a list of Tipologias
 export function index(req, res) {
   return Solicitud.findAll({
-    include: [{ model: Tipologia, as: "Tipologia" }]
+    include: [{ model: Tipologia, as: "Tipologia" }],
+    order: [["prioridad"]]
   })
     .then(respondWithResult(res))
     .catch(handleError(res));
@@ -72,6 +73,7 @@ export function index(req, res) {
 export function show(req, res) {
   return Solicitud.find({
     include: [{ model: Tipologia, as: "Tipologia" }],
+    order: [["prioridad"]],
     where: {
       _id: req.params.id
     } 
@@ -84,6 +86,7 @@ export function show(req, res) {
 export function showTipologias(req, res) {
   return Solicitud.findAll({
     include: [{ model: Tipologia, as: "Tipologia" }],
+    order: [["prioridad"]],
     where: {
       fk_tipologia: req.params.id
     }
