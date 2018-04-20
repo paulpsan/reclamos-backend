@@ -9,6 +9,7 @@ module.exports = {
   sequelize: {
     uri: 'postgresql://postgres:postgres@localhost/reclamos',
     options: {
+      timezone:"-04:00"
     }
   },
 };
