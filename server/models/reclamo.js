@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 export default function(sequelize, DataTypes) {
   return sequelize.define("Reclamo", {
@@ -20,7 +20,7 @@ export default function(sequelize, DataTypes) {
     fecha_reclamo: DataTypes.STRING,
     fecha_modificacion: DataTypes.STRING,
     observaciones: DataTypes.STRING,
-    usuario_accion:DataTypes.STRING,
+    usuario_accion: DataTypes.STRING,
     canal: DataTypes.STRING,
     estado: DataTypes.STRING,
   });

@@ -19,6 +19,7 @@ import { Sequelize } from "sequelize";
 function respondWithResult(res, statusCode) {
   statusCode = statusCode || 200;
   return function(entity) {
+    console.log("res:", entity);
     if (entity) {
       res.status(statusCode).json(entity);
     }
@@ -61,7 +62,6 @@ function handleError(res, statusCode) {
 }
 export function graficas(req, res) {
   let departamento = req.params.id.toUpperCase();
-  console.log(departamento);
 
   return Reclamo.findAll({
     attributes: [
@@ -74,7 +74,6 @@ export function graficas(req, res) {
     },
     group: ["distrito", "departamento"]
   }).then(result => {
-    // console.log(result);
     res.send(result);
   });
 }
@@ -106,7 +105,6 @@ export function show(req, res) {
 export function create(req, res) {
   req.body.fecha_reclamo = moment().format();
   req.body.fecha_modificacion = "";
-  console.log(req.body);
   return Reclamo.create(req.body)
     .then(respondWithResult(res, 201))
     .catch(handleError(res));
@@ -142,13 +140,10 @@ export function destroy(req, res) {
 }
 
 export function reporte(req, res) {
-  console.log(req.body);
   const Op = Sequelize.Op;
   let desde = new Date(req.body.desde);
   let hasta = new Date(req.body.hasta);
-  // d.setDate(2);
-  // h.setDate(15);
-  // console.log("desde", d, "  hasta", h);
+  hasta.setHours(43, 59, 59, 0);
   return Reclamo.findAll({
     include: [{ model: Usuario, as: "Usuario" }],
     where: {
@@ -162,42 +157,3 @@ export function reporte(req, res) {
     })
     .catch(handleError(res));
 }
-
-// export function reporte(req, res) {
-//   console.log(req.body);
-//   const Op = Sequelize.Op;
-//   let desde = new Date("2018-02-02");
-//   let hasta = new Date("2018-03-03");
-//   // d.setDate(2);
-//   // h.setDate(15);
-//   // console.log("desde", d, "  hasta", h);
-//   return Reclamo.findAll({
-//     where: {
-//       createdAt: {
-//         [Op.between]: [desde, hasta]
-//       }
-//     }
-//   })
-//     .then(response => {
-//       console.log(response);
-//       var data = {
-//         template: { shortid: "Bk8T081KG" },
-//         data: { data: {} },
-//         options: {
-//           preview: true
-//         }
-//       };
-//       var options = {
-//         uri: "http://localhost:5488/api/report",
-//         method: "POST",
-//         json: data
-//       };
-//       request(options)
-//         .then(resp => {
-//           console.log("prueba", resp);
-//         })
-//         .pipe(res);
-//       // return res.status(200).json({ data: response });
-//     })
-//     .catch(handleError(res));
-// }

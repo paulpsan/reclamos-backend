@@ -75,7 +75,6 @@ export function show(req, res) {
 }
 // gets a list Ue from the DB
 export function search(req, res) {
-  console.log("req", req.body.des_ue);
   return (Ue.findAll({
       where: {
         des_ue: { $like: "%" + req.body.des_ue + "%" }

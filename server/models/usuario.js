@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 export default function(sequelize, DataTypes) {
   return sequelize.define("Usuario", {
@@ -13,13 +13,16 @@ export default function(sequelize, DataTypes) {
     rol: {
       type: DataTypes.STRING,
       validate: {
-        isIn: [["ADMIN", "AGENTE", "SUPERVISOR", "REPORTES","INVITADO"]]
+        isIn: [["ADMIN", "AGENTE", "SUPERVISOR", "REPORTES", "INVITADO"]]
       }
     },
     nombres: DataTypes.STRING,
     apaterno: DataTypes.STRING,
     amaterno: DataTypes.STRING,
     fecha_nacimiento: DataTypes.STRING,
-    genero: DataTypes.STRING
+    genero: DataTypes.STRING,
+    // Timestamps
+    createdAt: DataTypes.DATE,
+    updatedAt: DataTypes.DATE
   });
 }

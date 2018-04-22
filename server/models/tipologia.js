@@ -12,6 +12,6 @@ export default function(sequelize, DataTypes) {
     },
     descripcion: {
       type: DataTypes.STRING(2000)
-    }
+    },
   });
 }

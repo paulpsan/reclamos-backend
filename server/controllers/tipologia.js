@@ -33,7 +33,6 @@ function removeEntity(res) {
 
 function handleEntityNotFound(res) {
   return function(entity) {
-    console.log("entidad",entity);
     if(!entity) {
       res.status(404).end();
       return null;
@@ -43,7 +42,6 @@ function handleEntityNotFound(res) {
 }
 
 function handleError(res, statusCode) {
-  console.log("por que",res);
   statusCode = statusCode || 500;
   
   return function(err) {
@@ -70,7 +68,6 @@ export function show(req, res) {
 
 // Creates a new Tipologia in the DB
 export function create(req, res) {
-  console.log("obj",req.body);
   return Tipologia.create(req.body)
     .then(respondWithResult(res, 201))
     .catch(handleError(res));

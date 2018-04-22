@@ -69,7 +69,6 @@ export function index(req, res) {
     .catch(handleError(res));
 }
 export function showInteracion(req, res) {
-  console.log(req.params.id, req.params.interaccion);
   return Instancia.findAll({
     where: { entrada: req.params.id },
     include: [{ all: true }]
@@ -91,14 +90,12 @@ export function show(req, res) {
 
 // Creates a new Instancia in the DB
 export function create(req, res) {
-  console.log(req.body);
   return Instancia.create(req.body)
     .then(respondWithResult(res, 201))
     .catch(handleError(res));
 }
 
 export function createInteraccion(req, res) {
-  console.log("entro yo");
   return InstanciaInteraccion.create(req.body)
     .then(respondWithResult(res, 201))
     .catch(handleError(res));
@@ -132,7 +129,6 @@ export function destroy(req, res) {
     .catch(handleError(res));
 }
 export function reporte(req, res) {
-  console.log(req.body);
   const Op = Sequelize.Op;
   let desde = new Date(req.body.desde);
   let hasta = new Date(req.body.hasta);

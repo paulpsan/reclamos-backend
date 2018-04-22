@@ -18,6 +18,7 @@ import "moment/locale/es-us";
 function respondWithResult(res, statusCode) {
   statusCode = statusCode || 200;
   return function(entity) {
+    console.log("res:", entity);
     if (entity) {
       res.status(statusCode).json(entity);
     }
@@ -76,7 +77,7 @@ export function show(req, res) {
     order: [["prioridad"]],
     where: {
       _id: req.params.id
-    } 
+    }
   })
     .then(handleEntityNotFound(res))
     .then(respondWithResult(res))
@@ -97,7 +98,6 @@ export function showTipologias(req, res) {
 }
 
 export function create(req, res) {
-  console.log("CREAR RESERVA");
   return Solicitud.create(req.body)
     .then(respondWithResult(res, 201))
     .catch(handleError(res));

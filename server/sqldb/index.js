@@ -34,6 +34,14 @@ db.Reclamo.belongsTo(db.Usuario, {
   as: "Usuario"
 });
 
+db.Instancia.belongsTo(db.Usuario, {
+  foreignKey: {
+    name: "fk_usuario",
+    allowNull: false
+  },
+  as: "Usuario"
+});
+
 db.Solicitud.belongsTo(db.Tipologia, {
   foreignKey: {
     name: "fk_tipologia",

@@ -61,7 +61,6 @@ function handleError(res, statusCode) {
 // Gets a list of Interacciones
 export function index(req, res) {
   if (req.query.entrada && req.query.categoria) {
-    console.log(req.query);
     return Interaccion.findAll({
       where: {
         entrada: req.query.entrada,
@@ -71,7 +70,6 @@ export function index(req, res) {
       .then(respondWithResult(res))
       .catch(handleError(res));
   } else {
-    console.log("entro");
     return Interaccion.findAll()
       .then(respondWithResult(res))
       .catch(handleError(res));
@@ -79,7 +77,6 @@ export function index(req, res) {
 }
 // Gets a single Interaccion from the DB
 export function show(req, res) {
-  console.log("prueba", req.params);
   return (
     Interaccion.find({
       where: {
@@ -94,7 +91,6 @@ export function show(req, res) {
 
 // Creates a new Interaccion in the DB
 export function create(req, res) {
-  console.log(req.body);
   return Interaccion.create(req.body)
     .then(respondWithResult(res, 201))
     .catch(handleError(res));
@@ -125,46 +121,5 @@ export function destroy(req, res) {
   })
     .then(handleEntityNotFound(res))
     .then(removeEntity(res))
-    .catch(handleError(res));
-}
-
-export function mail(req, res) {
-  console.log("entroo");
-  nodemailer.createTestAccount((err, account) => {
-    // create reusable transporter object using the default SMTP transport
-    let transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: "paulpsan@gmail.com",
-        pass: "malditoalcohol"
-      }
-    });
-
-    // setup email data with unicode symbols
-    let mailOptions = {
-      from: "paulpsan@gmail.com", // sender address
-      to: "xd_luap_gg@hotmail.com", // list of receivers
-      subject: "Hello ✔", // Subject line
-      text: "Hello world?", // plain text body
-      html: "<b>Hello world?</b>" // html body
-    };
-
-    // send mail with defined transport object
-    transporter.sendMail(mailOptions, (error, info) => {
-      if (error) {
-        return console.log(error);
-      }
-      console.log("Message sent: %s", info.messageId);
-      // Preview only available when sending through an Ethereal account
-      console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
-
-      // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
-      // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
-    });
-  });
-  // return req.send({"prue":"sad"})
-
-  return Interaccion.findAll()
-    .then(respondWithResult(res))
     .catch(handleError(res));
 }
