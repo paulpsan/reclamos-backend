@@ -146,3 +146,52 @@ export function reporte(req, res) {
     })
     .catch(handleError(res));
 }
+export function graficas(req, res) {
+  let canal = req.params.id.toUpperCase();
+  if (canal == "TODO") {
+    return Instancia.findAll({
+      // include: [{ all: true }],
+      attributes: [
+        "canal",
+        [Sequelize.fn("COUNT", Sequelize.col("canal")), "cont"]
+      ],
+      group: ["canal"]
+    }).then(result => {
+      res.send(result);
+    });
+  } else {
+    return Instancia.findAll({
+      include: [{ all: true }],
+      where: {
+        canal: canal
+      }
+    })
+      .then(response => {
+        let contConsulta = 0;
+        let contRequerimiento = 0;
+        let contDenuncia = 0;
+        for (const iterator of response) {
+          for (const interac of iterator.Interacciones) {
+            console.log("object", interac.categoria);
+            if (interac.categoria == "Consulta") {
+              contConsulta++;
+            } else {
+              if (interac.categoria == "Requerimiento") {
+                contRequerimiento++;
+              } else {
+                contDenuncia++;
+              }
+            }
+          }
+        }
+        let objRes = [
+          { label: "Consultas", cont: contConsulta },
+          { label: "Requerimiento", cont: contRequerimiento },
+          { label: "Denuncias", cont: contDenuncia }
+        ];
+
+        return res.status(200).json(objRes);
+      })
+      .catch(handleError(res));
+  }
+}

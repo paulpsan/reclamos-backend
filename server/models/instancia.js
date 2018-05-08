@@ -8,6 +8,7 @@ export default function(sequelize, DataTypes) {
       primaryKey: true,
       autoIncrement: true
     },
-    entrada: DataTypes.STRING
+    entrada: DataTypes.STRING,
+    canal: DataTypes.STRING
   });
 }

@@ -62,20 +62,31 @@ function handleError(res, statusCode) {
 }
 export function graficas(req, res) {
   let departamento = req.params.id.toUpperCase();
-
-  return Reclamo.findAll({
-    attributes: [
-      "distrito",
-      "departamento",
-      [Sequelize.fn("COUNT", Sequelize.col("distrito")), "cont"]
-    ],
-    where: {
-      departamento: departamento
-    },
-    group: ["distrito", "departamento"]
-  }).then(result => {
-    res.send(result);
-  });
+  if (departamento == "TODO") {
+    return Reclamo.findAll({
+      attributes: [
+        "departamento",
+        [Sequelize.fn("COUNT", Sequelize.col("departamento")), "cont"]
+      ],
+      group: ["departamento"]
+    }).then(result => {
+      res.send(result);
+    });
+  } else {
+    return Reclamo.findAll({
+      attributes: [
+        "distrito",
+        "departamento",
+        [Sequelize.fn("COUNT", Sequelize.col("distrito")), "cont"]
+      ],
+      where: {
+        departamento: departamento
+      },
+      group: ["distrito", "departamento"]
+    }).then(result => {
+      res.send(result);
+    });
+  }
 }
 
 // Gets a list of reclamos
