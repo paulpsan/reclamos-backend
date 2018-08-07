@@ -1,4 +1,3 @@
-
 ## Setup del entorno de desarrollo
 Necesitas instalar:
 * Git
@@ -18,7 +17,7 @@ $ npm install
 La configuacion del la base de datos se encuentra
 /server/config/environment/development.js
 
-"postgresql://postgres:postgres@localhost/hackday"
+"postgresql://postgres:postgres@localhost/reclamos"
 
 ## Ejecucion Desarrollo
 
