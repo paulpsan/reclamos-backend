@@ -37,7 +37,7 @@
     "pg": "^6.4.2",
     "pg-hstore": "^2.3.2",
     "querystringify": "^1.0.0",
-    "sequelize": "^4.26.0",
+    "sequelize": "^5.15.1",
     "ssl-root-cas": "^1.2.4"
   },
   "devDependencies": {
